@@ -24,11 +24,10 @@ build:
     - docker push "$CONTAINER_TEST_IMAGE"
 
 test:
-  image: $CONTAINER_TEST_IMAGE
   stage: test
   script:
-    - java -version
-    - tini --version
+    - docker run $CONTAINER_TEST_IMAGE java -version
+    - docker run $CONTAINER_TEST_IMAGE tini --version
 
 release-image:
   stage: release
