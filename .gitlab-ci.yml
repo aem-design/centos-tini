@@ -26,7 +26,6 @@ build:
 test:
   stage: test
   script:
-    - docker run $CONTAINER_TEST_IMAGE java -version
     - docker run $CONTAINER_TEST_IMAGE tini --version
 
 release-image:
