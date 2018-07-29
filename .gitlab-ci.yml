@@ -42,4 +42,3 @@ trigger_build:
   script:
     - echo "Build oracle-jdk"
     - docker run appropriate/curl curl -X POST -F "token=$CI_JOB_TOKEN" -F "ref=$CI_COMMIT_REF_NAME" https://gitlab.com/api/v4/projects/7623202/trigger/pipeline
-    -
