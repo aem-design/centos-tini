@@ -38,8 +38,8 @@ release-image:
     - master
 
 trigger_build:
-  image: appropriate/curl
   stage: trigger
   script:
     - echo "Build oracle-jdk"
-    - curl -X POST -F "token=$CI_JOB_TOKEN" -F "ref=$CI_COMMIT_REF_NAME" https://gitlab.com/api/v4/projects/7623202/trigger/pipeline
+    - docker run appropriate/curl curl -X POST -F "token=$CI_JOB_TOKEN" -F "ref=$CI_COMMIT_REF_NAME" https://gitlab.com/api/v4/projects/7623202/trigger/pipeline
+    -
