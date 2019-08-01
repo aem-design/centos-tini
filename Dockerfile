@@ -5,7 +5,7 @@ MAINTAINER devops <devops@aem.design>
 LABEL   os.version="centos" \
         container.description="centos with tini" \
         version="0.18.0" \
-        imagename="oracle-jdk"
+        imagename="centos-tini"
 
 
 ARG TINI_VERSION="v0.18.0"
