@@ -2,7 +2,7 @@ FROM       centos:latest
 
 MAINTAINER devops <devops@aem.design>
 
-LABEL   os.version="centos" \
+LABEL   os="centos" \
         container.description="centos with tini" \
         version="0.18.0" \
         imagename="centos-tini"
