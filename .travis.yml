@@ -38,7 +38,7 @@ before_deploy:
   - export CURRENT_VERSION=$(git describe --tag --always --long | sed -e 's/\(.*\)-\(.*\)-.*/\1.\2/')
   - echo CURRENT_VERSION=$CURRENT_VERSION
   - export TRAVIS_TAG=$CURRENT_VERSION
-  - if [[ $TRAVIS_BRANCH != "master" ]]; then git tag $TRAVIS_TAG; fi
+  - if [[ $TRAVIS_BRANCH == "master" ]]; then git tag $TRAVIS_TAG; fi
 
 ## Create release in GitHub
 deploy:
