@@ -11,7 +11,7 @@ before_install:
   - echo IMAGE_VERSION=$IMAGE_VERSION
   - export VERSION=$(grep "ARG TINI_VERSION=" Dockerfile | sed -e 's/.*TINI_VERSION="v\(.*\)".*/\1/')
   - echo VERSION=$VERSION
-  - export TEXT_EXPECTED=$(grep " version=" Dockerfile | sed -e 's/.*version="\(.*\)".*/\1/')
+  - export TEXT_EXPECTED=$(grep "version=" Dockerfile | sed -e 's/.*version="\(.*\)".*/\1/')
   - echo TEXT_EXPECTED=$TEXT_EXPECTED
 
 #build and test
