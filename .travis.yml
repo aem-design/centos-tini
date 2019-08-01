@@ -1,0 +1,34 @@
+language: java
+
+services:
+  - 'docker'
+
+before_install:
+  - export IMAGE_NAME=$(grep imagename Dockerfile | sed -e 's/.*imagename="\(.*\)".*/\1/')
+  - export IMAGE_VERSION=$(grep version Dockerfile | sed -e 's/.*version="\(.*\)".*/\1/')
+  - export IMAGE="$ORGANISATION_NAME/$IMAGE_NAME"
+  - echo IMAGE_NAME=$IMAGE_NAME
+  - echo IMAGE_VERSION=$IMAGE_VERSION
+  - export VERSION=$(grep "ARG TINI_VERSION=" Dockerfile | sed -e 's/.*TINI_VERSION="v\(.*\)".*/\1/')
+  - echo VERSION=$VERSION
+  - export TEXT_EXPECTED=$(grep " version=" Dockerfile | sed -e 's/.*version="\(.*\)".*/\1/')
+  - echo TEXT_EXPECTED=$TEXT_EXPECTED
+
+#build and test
+install:
+  - docker build --pull -t $IMAGE:$IMAGE_VERSION .
+  - docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest
+  - export CONTAINER_OUTPUT=$(docker run $IMAGE:$IMAGE_VERSION tini --version | sed -e 's/.*version \(.*\) -.*/\1/')
+  - echo CONTAINER_OUTPUT=$CONTAINER_OUTPUT
+  - docker tag $IMAGE:$IMAGE_VERSION $IMAGE:$CONTAINER_OUTPUT
+  - docker images
+
+#test
+script:
+  - if [[ ! ${CONTAINER_OUTPUT} =~ ${TEXT_EXPECTED} ]]; then travis_terminate 1; fi
+  - echo "LOGIN TO HUB.DOCKER"
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  - echo "PUSH HUB.DOCKER"
+  - docker push $IMAGE:$IMAGE_VERSION && docker push $IMAGE:$CONTAINER_OUTPUT && if [[ $TRAVIS_BRANCH == "master" ]]; then docker push $IMAGE:latest; fi
+  - echo "UPDATE README IN HUB.DOCKER"
+  - if [[ $TRAVIS_BRANCH == "master" ]]; then docker run --rm -v $(pwd)/README.md:/data/README.md -e DOCKERHUB_USERNAME=$DOCKER_USERNAME -e DOCKERHUB_PASSWORD=$DOCKER_PASSWORD -e DOCKERHUB_REPO_PREFIX=$ORGANISATION_NAME -e DOCKERHUB_REPO_NAME=$IMAGE_NAME sheogorath/readme-to-dockerhub; fi
