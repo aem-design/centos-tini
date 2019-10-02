@@ -7,7 +7,7 @@ LABEL   os="centos" \
         version="0.18.0" \
         imagename="centos-tini" \
         test.command=" tini --version | sed -e 's/.*version \(.*\) -.*/\1/'" \
-        test.command.verify="1.0.0"
+        test.command.verify="0.18.0"
 
 
 ARG TINI_VERSION="v0.18.0"
