@@ -16,6 +16,7 @@ before_install:
   - echo IMAGE_VERSION=$IMAGE_VERSION
   - echo TEST_COMMAND=$TEST_COMMAND
   - echo TEST_COMMAND_VERIFY=$TEST_COMMAND_VERIFY
+  - echo GET CONFIG FROM GIT
   - export CURRENT_VERSION=$(git describe --tag --always --long | sed -e 's/\(.*\)-\(.*\)-.*/\1.\2/')
   - declare -a CURRENT_VERSION_ARRAY="(${CURRENT_VERSION//./ })"; export SEMVER_MAJOR=${CURRENT_VERSION_ARRAY[0]}; export SEMVER_MINOR=${CURRENT_VERSION_ARRAY[1]}; export SEMVER_PATCH=${CURRENT_VERSION_ARRAY[2]}; export SEMVER_BUILD=${CURRENT_VERSION_ARRAY[-1]}
   - export SEMVER_BUILD=$(( ${SEMVER_PATCH} + ${SEMVER_BUILD} ))
@@ -45,6 +46,8 @@ script:
   - echo "PUSH HUB.DOCKER"
   - docker push $IMAGE:$IMAGE_VERSION
   - if [[ $TRAVIS_BRANCH == "master" ]]; then docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest && docker push $IMAGE:latest; fi
+  - echo "PUSH HUB.DOCKER BRANCH"
+  - if [[ $TRAVIS_BRANCH != "master" ]]; then docker tag $IMAGE:$IMAGE_VERSION $IMAGE:$TRAVIS_BRANCH && docker push $IMAGE:$TRAVIS_BRANCH; fi
   - echo "UPDATE README IN HUB.DOCKER"
   - if [[ $TRAVIS_BRANCH == "master" ]]; then docker run --rm -v $(pwd):/data/ aemdesign/dockerhub-description "$DOCKER_USERNAME" "$DOCKER_PASSWORD" "$IMAGE"; fi
 
