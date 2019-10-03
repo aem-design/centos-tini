@@ -44,7 +44,7 @@ script:
   - echo "LOGIN TO HUB.DOCKER"
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - echo "PUSH HUB.DOCKER"
-  - docker push $IMAGE:$IMAGE_VERSION
+  - if [[ $TRAVIS_BRANCH == "master" ]]; then docker push $IMAGE:$IMAGE_VERSION; fi
   - if [[ $TRAVIS_BRANCH == "master" ]]; then docker tag $IMAGE:$IMAGE_VERSION $IMAGE:latest && docker push $IMAGE:latest; fi
   - echo "PUSH HUB.DOCKER BRANCH"
   - if [[ $TRAVIS_BRANCH != "master" ]]; then docker tag $IMAGE:$IMAGE_VERSION $IMAGE:$TRAVIS_BRANCH && docker push $IMAGE:$TRAVIS_BRANCH; fi
