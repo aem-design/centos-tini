@@ -1,8 +1,8 @@
-FROM       centos:7
+FROM       centos:8
 
 MAINTAINER devops <devops@aem.design>
 
-LABEL   os="centos" \
+LABEL   os="centos 8" \
         container.description="centos with tini" \
         version="0.18.0" \
         imagename="centos-tini" \
