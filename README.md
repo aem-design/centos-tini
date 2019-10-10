@@ -1,6 +1,6 @@
 ## CentOS 7 with Tini
 
-[![build_status](https://travis-ci.org/aem-design/centos-tini.svg?branch=master)](https://travis-ci.org/aem-design/centos-tini) 
+[![build_status](https://travis-ci.org/aem-design/docker-centos-tini.svg?branch=master)](https://travis-ci.org/aem-design/docker-centos-tini) 
 [![github license](https://img.shields.io/github/license/aem-design/centos-tini)](https://github.com/aem-design/centos-tini) 
 [![github issues](https://img.shields.io/github/issues/aem-design/centos-tini)](https://github.com/aem-design/centos-tini) 
 [![github last commit](https://img.shields.io/github/last-commit/aem-design/centos-tini)](https://github.com/aem-design/centos-tini) 
