@@ -95,11 +95,11 @@ printDebug() {
 
 test_docker_run_usage() {
   printLine "Testing 'docker run' usage"
-  CHECK="Apache Maven"
+  CHECK="tini"
 
   printLine "Starting Container"
 
-  OUTPUT=$(docker run --rm ${IMAGE_NAME} mvn --version)
+  OUTPUT=$(docker run --rm ${IMAGE_NAME} /bin/tini --version)
 
   if [[ "$OUTPUT" != *"$CHECK"* ]]; then
       printResult "error"
