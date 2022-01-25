@@ -16,10 +16,8 @@ ARG GPG_KEYS="595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7"
 
 RUN curl -fsSL ${TINI_URL} -o /bin/tini && \
     curl -fsSL ${TINI_URL}.asc -o /bin/tini.asc && \
-    (gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys ${TINI_KEY} || \
-        gpg --keyserver pgp.mit.edu --recv-keys "$GPG_KEYS" || \
-        gpg --keyserver keyserver.pgp.com --recv-keys "$GPG_KEYS" ) && \
-    gpg --verify /bin/tini.asc && \
+    gpg --batch --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys ${TINI_KEY} && \
+    gpg --batch --verify /bin/tini.asc /bin/tini %% \
     chmod +x /bin/tini
 
 ENTRYPOINT ["/bin/tini", "--"]
