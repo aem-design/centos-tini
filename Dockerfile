@@ -1,6 +1,6 @@
-FROM       centos:8
+FROM       arm64v8/centos
 
-LABEL   os="centos 8" \
+LABEL   os="centos 8 arm" \
         container.description="centos with tini" \
         version="0.19.0" \
         maintainer="devops <devops@aem.design>" \
@@ -11,7 +11,7 @@ LABEL   os="centos 8" \
 
 ARG TINI_VERSION="v0.19.0"
 ARG TINI_KEY="595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7"
-ARG TINI_URL="https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-amd64"
+ARG TINI_URL="https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-arm64"
 
 RUN curl -fsSL ${TINI_URL} -o /bin/tini && \
     curl -fsSL ${TINI_URL}.asc -o /bin/tini.asc && \
