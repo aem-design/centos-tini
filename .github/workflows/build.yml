@@ -66,7 +66,6 @@ jobs:
           push: true
           tags: ${{ env.IMAGE }}:${{ env.GIT_BRANCH }}
 
-
       - name: update registry description with readme on master
         if: github.ref == 'refs/heads/master'
         run: |
